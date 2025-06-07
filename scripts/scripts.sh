@@ -15,3 +15,6 @@ curl http://localhost:8080/equipamentos/api/v1/create \
 
 # GET por produto
 curl "http://localhost:8080/equipamentos/api/v1/produto?nome=Manila"
+
+# DELETE por ID
+curl -X DELETE "http://localhost:8080/equipamentos/api/v1/produto/delete?id=3"
