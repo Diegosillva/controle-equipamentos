@@ -8,6 +8,6 @@ type Equipamentos struct {
 	NumeroSerie string `json:"numero_serie"`
 	SerialDSP   string `json:"serial_dsp"`
 	Localizacao string `json:"localizacao"`
-	Status      bool   `json:"status"`
+	Status      string `json:"status"`
 	Descricao   string `json:"descricao"`
 }
