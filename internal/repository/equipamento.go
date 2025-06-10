@@ -27,13 +27,23 @@ func ListaEquipamentos(db *sql.DB) ([]model.Equipamentos, error) {
 	return equipamentos, nil
 }
 
+func BuscaEquipamentoPorID(db *sql.DB, id int) (model.Equipamentos, error) {
+	var e model.Equipamentos
+	err := db.QueryRow(`
+		SELECT id, produto, equipamento, modelo, numero_de_serie,
+		serial_dsp, localizacao, status, descricao FROM cadastro_equipamentos
+		WHERE id = $1
+		`, id).Scan(&e.ID, &e.Produto, &e.Equipamento, &e.Modelo, &e.NumeroSerie,
+		&e.SerialDSP, &e.Localizacao, &e.Status, &e.Descricao)
+	return e, err
+}
+
 func BuscarEquipamentoPorProduto(db *sql.DB, produto string) (*model.Equipamentos, error) {
-	row := db.QueryRow(
-		`
+	row := db.QueryRow(`
 	SELECT id, produto, equipamento, modelo, numero_de_serie,
 	serial_dsp, localizacao, status, descricao FROM cadastro_equipamentos
 	WHERE produto = $1
-	`)
+	`, produto)
 	var e model.Equipamentos
 
 	err := row.Scan(&e.ID, &e.Produto, &e.Equipamento, &e.Modelo, &e.NumeroSerie,
