@@ -6,7 +6,7 @@ CREATE TABLE cadastro_equipamentos (
     numero_de_serie TEXT,
     serial_dsp TEXT,
     localizacao TEXT,
-    status BOOLEAN,
+    status TEXT,
     descricao TEXT,
     created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
