@@ -61,7 +61,7 @@ func GetByProdutoEquipamentos(w http.ResponseWriter, r *http.Request) {
 
 	equipamentos, err := repository.BuscarEquipamentoPorProduto(db, produto)
 	if err != nil {
-		http.Error(w, "Error ao buscar dados", http.StatusInternalServerError)
+		http.Error(w, "Equipamento não econtrado.", http.StatusInternalServerError)
 		return
 	}
 
@@ -113,15 +113,19 @@ func DeleteByIdEquipamentos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var e model.Equipamentos
-
 	idStr := r.URL.Query().Get("id")
 	id, _ := strconv.Atoi(idStr)
 
 	db, _ := service.OpenDB()
 	defer db.Close()
 
-	err := repository.DeletarEquipamento(db, id)
+	equipamento, err := repository.BuscaEquipamentoPorID(db, id)
+	if err != nil {
+		http.Error(w, "Equipamento não encontrado.", http.StatusNotFound)
+		return
+	}
+
+	err = repository.DeletarEquipamento(db, id)
 	if err != nil {
 		http.Error(w, "Error ao deletar equipamento", http.StatusInternalServerError)
 		return
@@ -130,7 +134,7 @@ func DeleteByIdEquipamentos(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
 
-	jsonFormat, err := json.MarshalIndent(e, "", " ")
+	jsonFormat, err := json.MarshalIndent(equipamento, "", " ")
 	if err != nil {
 		http.Error(w, "Error ao formatar JSON", http.StatusInternalServerError)
 		return
