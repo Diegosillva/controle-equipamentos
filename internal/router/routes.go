@@ -3,6 +3,8 @@ package router
 import (
 	"controle/internal/handler"
 	"net/http"
+
+	"github.com/rs/cors"
 )
 
 func Rotas() http.Handler {
@@ -12,5 +14,12 @@ func Rotas() http.Handler {
 	mux.HandleFunc("/equipamentos/api/v1/produto", handler.GetByProdutoEquipamentos)
 	mux.HandleFunc("/equipamentos/api/v1/produto/delete", handler.DeleteByIdEquipamentos)
 	mux.HandleFunc("/equipamentos/api/v1/create", handler.PostEquipamentos)
-	return mux
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodDelete},
+		AllowCredentials: true,
+	})
+
+	return c.Handler(mux)
 }
