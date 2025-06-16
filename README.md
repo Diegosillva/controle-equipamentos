@@ -23,7 +23,7 @@ Sistema Fullstack para cadastro e gerenciamento de equipamentos. A aplicação p
 
 ### 🔍 Tela de Listagem de Equipamentos
 
-![Tela Inicial](readme-imagens/tela-inicial.png)
+![Tela Inicial](https://github.com/Diegosillva/controle-equipamentos/blob/main/readme-imagens/tela-incial.png)
 ### 📝 Tela de Cadastro de Equipamentos
 
 ![Cadastro de Equipamentos](readme-imagens/tela-cadastro.png)
