@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { GetEquipamentos } from "../api"
+import { DeletarEquipamentos, GetEquipamentos } from "../api"
 import { Link } from "react-router-dom";
 
 export default function Consulta() {
@@ -16,9 +16,14 @@ export default function Consulta() {
         item.produto.toLowerCase().includes(buscaModelo.toLowerCase())
     );
 
-    const deletarEquipamento = (id) => {
-        const novaLista = equipamentos.filter(item => item.id !== id);
-        setEquipamentos(novaLista)
+    const deleteEquipamento = async (id) => {
+        try {
+            await DeletarEquipamentos(id);
+            const novaLista = equipamentos.filter(item => item.id !== id);
+            setEquipamentos(novaLista)
+        } catch (err) {
+            alert("Erro ao deletar equipamento")
+        }
     }
 
 
@@ -37,7 +42,7 @@ export default function Consulta() {
                 </button>
             </Link>
         </div>
-        <div className="overflow-x-auto p-4 dark:bg-gray-200">
+        <div className="overflow-x-auto p-4 dark:bg-gray-200 ">
             <table className="min-w-full table-auto boder border-gray-200
                 dark:border-gray-700">
                 <thead className="bg-gray-100 dark:bg-gray-700">
@@ -76,9 +81,9 @@ export default function Consulta() {
                             <td className="px-4 py-2">{item.status}</td>
                             <td className="px-4 py-2">{item.descricao}</td>
                             <td>
-                                <button 
+                                <button
                                     type="button"
-                                    onClick={() => deletarEquipamento(item.id)}
+                                    onClick={() => deleteEquipamento(item.id)}
                                     className="dark:bg-gray-600 hover:bg-gray-50
                                     rounded px-1 py-1 cursor-pointer">
                                     Deletar
