@@ -1,4 +1,5 @@
-psql -U diego -d equipamento -f db.sql # para rodar um banco de dados atraves de um arquivo.
+# para rodar um banco de dados atraves de um arquivo.
+psql -U {usuario} -d {banco} -f {arquivo .sql} 
 
 # POST
 curl http://localhost:8080/equipamentos/api/v1/create \
