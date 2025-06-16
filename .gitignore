@@ -1,4 +1,4 @@
-golang/scripts
+golang/scripts/
 # Logs
 logs
 *.log
