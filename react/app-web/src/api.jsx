@@ -1,3 +1,5 @@
+import { Delete } from "lucide-react";
+
 const BASE_URL = "http://localhost:8080";
 
 export async function GetEquipamentos() {
@@ -17,9 +19,9 @@ export async function GetByProdutoEquipamentos() {
 }
 
 export async function CriarEquipamentos(payload) {
-    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/create`,{
-        method : "POST",
-        headers : { "Content-Type": "application/json" },
+    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
     });
     if (!response.ok) {
@@ -27,3 +29,20 @@ export async function CriarEquipamentos(payload) {
     }
     return await response.json();
 }
+
+export async function DeletarEquipamentos(id) {
+    try {
+        const response = await fetch(`${BASE_URL}/equipamentos/api/v1/produto/delete?id=${id}`, {
+            method: "DELETE",
+        })
+        if (!response.ok) {
+            throw new Error("Erro ao deletar equipamento");
+        }
+        return true;
+
+    } catch (err) {
+        console.error("Erro ao deletar da API", err);
+        throw err;
+    }
+}
+
