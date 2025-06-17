@@ -40,6 +40,41 @@ func GetEquipamentos(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonFormat)
 }
 
+func UpdateEquipamentos(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPut {
+		http.Error(w, "Metodo não permitido", http.StatusMethodNotAllowed)
+		return
+	}
+
+	var e model.Equipamentos
+	err := json.NewDecoder(r.Body).Decode(&e)
+	if err != nil {
+		http.Error(w, "JSON invalido", http.StatusBadRequest)
+		return
+	}
+
+	if e.ID == 0 {
+		http.Error(w, "ID do equipamento obrigatorio", http.StatusBadRequest)
+		return
+	}
+
+	db, err := service.OpenDB()
+	if err != nil {
+		http.Error(w, "Error ao conectar ao banco", http.StatusInternalServerError)
+		return
+	}
+	defer db.Close()
+
+	err = repository.EditarEquipamentos(db, e)
+	if err != nil {
+		http.Error(w, "Erro ao editar o Equipamento", http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
+
 func GetByProdutoEquipamentos(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "Metodo não permitido", http.StatusMethodNotAllowed)
