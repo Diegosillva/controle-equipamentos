@@ -27,6 +27,15 @@ func ListaEquipamentos(db *sql.DB) ([]model.Equipamentos, error) {
 	return equipamentos, nil
 }
 
+func EditarEquipamentos(db *sql.DB, e model.Equipamentos) error {
+	query := ` UPDATE cadastro_equipamentos SET produto = ?, equipamento = ?,
+		modelo = ?, numero_de_serie = ?, serial_dsp = ?, localizacao = ?,
+		status = ?, descricao = ? WHERE id = ? `
+	_, err := db.Exec(query, e.Produto, e.Equipamento, e.Modelo, e.NumeroSerie, e.SerialDSP, e.Localizacao,
+		e.Status, e.Descricao, e.ID)
+	return err
+}
+
 func BuscaEquipamentoPorID(db *sql.DB, id int) (model.Equipamentos, error) {
 	var e model.Equipamentos
 	err := db.QueryRow(`
