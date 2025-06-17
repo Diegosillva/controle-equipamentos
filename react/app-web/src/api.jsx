@@ -3,7 +3,7 @@ import { Delete } from "lucide-react";
 const BASE_URL = "http://localhost:8080";
 
 export async function GetEquipamentos() {
-    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/list`);
+    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/produto/list`);
     if (!response.ok) {
         throw new Error("Error ao buscar equipamentos");
     }
@@ -19,7 +19,7 @@ export async function GetByProdutoEquipamentos() {
 }
 
 export async function CriarEquipamentos(payload) {
-    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/create`, {
+    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/produto/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
