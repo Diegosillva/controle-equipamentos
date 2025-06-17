@@ -42,8 +42,8 @@ export default function Consulta() {
                 </button>
             </Link>
         </div>
-        <div className="overflow-x-auto p-4 dark:bg-gray-200 ">
-            <table className="min-w-full table-auto boder border-gray-200
+        <div className="w-full overflow-x-auto p-4 dark:bg-gray-200 ">
+            <table className="min-w-full table-auto border-gray-200
                 dark:border-gray-700">
                 <thead className="bg-gray-100 dark:bg-gray-700">
                     <tr className="text-left text-sm font-semibold text-gray-700
@@ -87,6 +87,12 @@ export default function Consulta() {
                                     className="dark:bg-gray-600 hover:bg-gray-50
                                     rounded px-1 py-1 cursor-pointer">
                                     Deletar
+                                </button>
+                                <button
+                                    type="button"
+                                    className="dark:bg-gray-600 hover:bg-gray-50
+                                    rounded px-1 py-1 mx-5 cursor-pointer">
+                                    Editar
                                 </button>
                             </td>
                         </tr>
