@@ -20,7 +20,10 @@ func GetEquipamentos(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	db, _ := service.OpenDB()
+	db, err := service.OpenDB()
+	if err != nil {
+		http.Error(w, "Error ao conectar ao banco", http.StatusInternalServerError)
+	}
 	defer db.Close()
 
 	equipamentos, err := repository.ListaEquipamentos(db)
