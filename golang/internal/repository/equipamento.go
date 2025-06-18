@@ -28,11 +28,11 @@ func ListaEquipamentos(db *sql.DB) ([]model.Equipamentos, error) {
 }
 
 func EditarEquipamentos(db *sql.DB, e model.Equipamentos) error {
-	query := ` UPDATE cadastro_equipamentos SET produto = ?, equipamento = ?,
-		modelo = ?, numero_de_serie = ?, serial_dsp = ?, localizacao = ?,
-		status = ?, descricao = ? WHERE id = ? `
-	_, err := db.Exec(query, e.Produto, e.Equipamento, e.Modelo, e.NumeroSerie, e.SerialDSP, e.Localizacao,
-		e.Status, e.Descricao, e.ID)
+	query := ` UPDATE cadastro_equipamentos SET produto = $1, equipamento = $2, 
+	modelo = $3, numero_de_serie = $4, serial_dsp = $5, localizacao = $6, 
+	status = $7, descricao = $8 WHERE id = $9 `
+	_, err := db.Exec(query, e.Produto, e.Equipamento, e.Modelo, e.NumeroSerie,
+		e.SerialDSP, e.Localizacao, e.Status, e.Descricao, e.ID)
 	return err
 }
 
