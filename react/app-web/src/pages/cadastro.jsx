@@ -27,7 +27,6 @@ export default function Cadastro() {
 
     const click = async (e) => {
         e.preventDefault();
-
         try {
             if (equipamentoParaEditar) {
                 await AtualizarEquipamentos(equipamentoParaEditar.id, form)
