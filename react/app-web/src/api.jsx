@@ -30,6 +30,20 @@ export async function CriarEquipamentos(payload) {
     return await response.json();
 }
 
+export async function AtualizarEquipamentos(id, dados) {
+    const response = await fetch(`${BASE_URL}/equipamentos/api/v1/produto/edit`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, ...dados})
+    });
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Erro detalhado:", errorText)
+        throw new Error("Erro ao atualizar equipamento.");
+    }
+    return 
+}
+
 export async function DeletarEquipamentos(id) {
     try {
         const response = await fetch(`${BASE_URL}/equipamentos/api/v1/produto/delete?id=${id}`, {
