@@ -1,5 +1,3 @@
-import { Delete } from "lucide-react";
-
 const BASE_URL = "http://localhost:8080";
 
 export async function GetEquipamentos() {
@@ -41,7 +39,7 @@ export async function AtualizarEquipamentos(id, dados) {
         console.error("Erro detalhado:", errorText)
         throw new Error("Erro ao atualizar equipamento.");
     }
-    return 
+    return await response.json(); 
 }
 
 export async function DeletarEquipamentos(id) {
