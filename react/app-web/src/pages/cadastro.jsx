@@ -1,20 +1,23 @@
 import { useState } from "react";
-import { CriarEquipamentos } from "../api";
-import { Link } from "react-router-dom";
+import { CriarEquipamentos, AtualizarEquipamentos } from "../api";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export default function Cadastro() {
-    const [form, setForm] = useState({
-        produto: "",
-        equipamento: "",
-        modelo: "",
-        numero_serie: "",
-        serial_dsp: "",
-        localizacao: "",
-        status: "",
-        descricao: "",
-    });
-
+    const location = useLocation();
+    const equipamentoParaEditar = location.state?.item || null;
+    const navigate = useNavigate();
     const [msg, setMsg] = useState("")
+
+    const [form, setForm] = useState({
+        produto: equipamentoParaEditar?.produto || "",
+        equipamento: equipamentoParaEditar?.equipamento || "",
+        modelo: equipamentoParaEditar?.modelo || "",
+        numero_serie: equipamentoParaEditar?.numero_serie || "",
+        serial_dsp: equipamentoParaEditar?.serial_dsp || "",
+        localizacao: equipamentoParaEditar?.localizacao || "",
+        status: equipamentoParaEditar?.status || "",
+        descricao: equipamentoParaEditar?.descricao || "",
+    });
 
     const handlerValue = (e) => {
         const { name, value } = e.target;
@@ -24,10 +27,16 @@ export default function Cadastro() {
 
     const click = async (e) => {
         e.preventDefault();
+
         try {
-            const resposta = CriarEquipamentos(form)
-            console.log("Salvo com sucesso.", resposta)
-            alert("Equipamento cadastrado com sucesso.")
+            if (equipamentoParaEditar) {
+                await AtualizarEquipamentos(equipamentoParaEditar.id, form)
+                alert("Equipamento atualizado com sucesso.")
+            } else {
+                await CriarEquipamentos(form);
+                alert("Equipamento cadastrado com sucesso.")
+            }
+
             setForm({
                 produto: "",
                 equipamento: "",
@@ -38,11 +47,13 @@ export default function Cadastro() {
                 status: "",
                 descricao: "",
             });
+
+            navigate("/");
+
         } catch (err) {
             console.error("Erro ao salvar", err)
-            setError("Erro ao salvar Equipamento")
+            setMsg("Erro ao salvar equipamento")
         }
-        console.log("Formulario Enviado")
     };
 
 
@@ -141,12 +152,12 @@ export default function Cadastro() {
                             shadow text-lg cursor-pointer"
                             type="submit"
                         >
-                            Cadastrar
+                            {equipamentoParaEditar ? "Salvar Edição" : "Cadastrar"}
                         </button>
 
                         <Link to="/">
                             <button className=" bg-blue-600 hover:bg-blue-700 text-white
-                    text-xl font-semibold py-3 px-6 rounded-xl shadow"
+                                text-xl font-semibold py-3 px-6 rounded-xl shadow"
                                 type="button">
                                 Consultar
                             </button>

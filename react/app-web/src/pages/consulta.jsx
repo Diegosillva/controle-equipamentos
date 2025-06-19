@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { DeletarEquipamentos, GetEquipamentos } from "../api"
+import { DeletarEquipamentos, GetEquipamentos, AtualizarEquipamentos} from "../api"
 import { Link } from "react-router-dom";
 
 export default function Consulta() {
@@ -26,6 +26,15 @@ export default function Consulta() {
         }
     }
 
+    const editarEquipamento = async (id, novosDados) => {
+        try {
+            const atualizado = await AtualizarEquipamentos(id, novosDados);
+            const novaLista = equipamentos.map(item => item.id !== id ? atualizado : item);
+            setEquipamentos(novaLista)
+        } catch (err) {
+            alert("Erro ao editar equipamento")
+        }
+    }
 
     return <>
         <div className="relative flex justify-center items-center  py-4">
@@ -88,12 +97,14 @@ export default function Consulta() {
                                     rounded px-1 py-1 cursor-pointer">
                                     Deletar
                                 </button>
-                                <button
-                                    type="button"
-                                    className="dark:bg-gray-600 hover:bg-gray-50
-                                    rounded px-1 py-1 mx-5 cursor-pointer">
-                                    Editar
-                                </button>
+                                <Link to="/cadastro" state={{ item }}>
+                                    <button
+                                        type="button"
+                                        className="dark:bg-gray-600 hover:bg-gray-50
+                                        rounded px-1 py-1 mx-5 cursor-pointer">
+                                        Editar
+                                    </button>
+                                </Link>
                             </td>
                         </tr>
                     ))}
