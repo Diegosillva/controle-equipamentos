@@ -76,6 +76,9 @@ func UpdateEquipamentos(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(map[string]string{
+		"mensagem": "Equipamento atualizado com sucesso",
+	})
 }
 
 func GetByProdutoEquipamentos(w http.ResponseWriter, r *http.Request) {
@@ -143,6 +146,9 @@ func PostEquipamentos(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
+	json.NewEncoder(w).Encode(map[string]string{
+		"mensagem": "Equipamento atualizado com sucesso",
+	})
 }
 
 func DeleteByIdEquipamentos(w http.ResponseWriter, r *http.Request) {
